@@ -2,10 +2,11 @@ package com.apwaver.petclinic.services.map;
 
 import com.apwaver.petclinic.model.Vet;
 import com.apwaver.petclinic.services.CrudService;
+import com.apwaver.petclinic.services.VetService;
 
 import java.util.Set;
 
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
    
     @Override
     public Set<Vet> findAll() {
