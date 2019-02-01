@@ -1,6 +1,7 @@
 package com.apwaver.petclinic.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class BaseEntity implements Serializable {
 
@@ -13,4 +14,5 @@ public class BaseEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
 }
