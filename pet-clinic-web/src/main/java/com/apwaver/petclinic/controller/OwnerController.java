@@ -20,13 +20,8 @@ public class OwnerController {
 
     @RequestMapping({"","/","/index","/index.html"})
     public String listOwners(Model model){
-
-        Set<Owner> set = ownerService.findAll();
-        for(Owner owner: set){
-            System.out.println(owner.getFirstName());
-        }
-
         model.addAttribute("owners", ownerService.findAll());
+
         return "owners/index";
     }
 }
