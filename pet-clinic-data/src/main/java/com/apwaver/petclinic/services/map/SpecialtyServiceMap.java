@@ -1,11 +1,13 @@
 package com.apwaver.petclinic.services.map;
 
 import com.apwaver.petclinic.model.Specialty;
-import com.apwaver.petclinic.services.SpecialitiesService;
+import com.apwaver.petclinic.services.SpecialityService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-public class SpecialtyServiceMap extends AbstractMapService<Specialty, Long> implements SpecialitiesService {
+@Service
+public class SpecialtyServiceMap extends AbstractMapService<Specialty, Long> implements SpecialityService {
     @Override
     public Set<Specialty> findAll() {
         return super.findAll();

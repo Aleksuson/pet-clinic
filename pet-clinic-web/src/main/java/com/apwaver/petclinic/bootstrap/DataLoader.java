@@ -1,11 +1,9 @@
 package com.apwaver.petclinic.bootstrap;
 
-import com.apwaver.petclinic.model.Owner;
-import com.apwaver.petclinic.model.Pet;
-import com.apwaver.petclinic.model.PetType;
-import com.apwaver.petclinic.model.Vet;
+import com.apwaver.petclinic.model.*;
 import com.apwaver.petclinic.services.OwnerService;
 import com.apwaver.petclinic.services.PetTypeService;
+import com.apwaver.petclinic.services.SpecialityService;
 import com.apwaver.petclinic.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,17 +18,29 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialitiesService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialityService specialitiesService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialitiesService = specialitiesService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        int count = petTypeService.findAll().size();
+
+        if(count == 0) {
+            LoadData();
+        }
+
+    }
+
+    private void LoadData() {
         // PetTypes Initialization
 
         PetType dog = new PetType();
@@ -68,7 +78,7 @@ public class DataLoader implements CommandLineRunner {
         owner2.setTelephone("633-423-425");
 
         Pet fionaPet = new Pet();
-        fionaPet.setPetType(savedDogPetType);
+        fionaPet.setPetType(savedCatPetType);
         fionaPet.setOwner(owner2);
         fionaPet.setBirthDate(LocalDate.now());
         fionaPet.setName("Mruczek");
@@ -96,10 +106,23 @@ public class DataLoader implements CommandLineRunner {
 
         // Vet Initialization
 
+        Specialty radiology = new Specialty();
+        radiology.setDescription("Radiology");
+        Specialty savedRadiology = specialitiesService.save(radiology);
+
+        Specialty surgery = new Specialty();
+        radiology.setDescription("Surgery");
+        Specialty savedSurgery = specialitiesService.save(surgery);
+
+        Specialty dentistry = new Specialty();
+        radiology.setDescription("Dentistry");
+        Specialty savedDentistry = specialitiesService.save(dentistry);
+
         Vet vet1 = new Vet();
 
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
+        vet1.getSpecialties().add(savedSurgery);
 
         vetService.save(vet1);
 
@@ -107,11 +130,10 @@ public class DataLoader implements CommandLineRunner {
 
         vet2.setFirstName("Tim");
         vet2.setLastName("Newton");
+        vet2.getSpecialties().add(savedRadiology);
 
         vetService.save(vet2);
 
         System.out.println("Loaded Vets...");
-
-
     }
 }
