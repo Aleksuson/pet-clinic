@@ -1,17 +1,14 @@
 package com.apwaver.petclinic.bootstrap;
 
 import com.apwaver.petclinic.model.Owner;
+import com.apwaver.petclinic.model.PetType;
 import com.apwaver.petclinic.model.Vet;
 import com.apwaver.petclinic.services.OwnerService;
+import com.apwaver.petclinic.services.PetTypeService;
 import com.apwaver.petclinic.services.VetService;
-import com.apwaver.petclinic.services.map.OwnerServiceMap;
-import com.apwaver.petclinic.services.map.VetServiceMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -19,15 +16,27 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType dog = new PetType();
+        dog.setName("Dog");
+        PetType savedDogPetType = petTypeService.save(dog);
+
+        PetType cat = new PetType();
+        cat.setName("Cat");
+        PetType savedCatPetType = petTypeService.save(dog);
+
+
 
         Owner owner1 = new Owner();
 
