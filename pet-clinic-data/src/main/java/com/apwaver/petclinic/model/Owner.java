@@ -1,8 +1,10 @@
 package com.apwaver.petclinic.model;
 
+import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Owner extends Person {
 
     private String address;
