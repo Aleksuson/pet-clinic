@@ -1,11 +1,16 @@
 package com.apwaver.petclinic.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
+
 
 public class Visit extends BaseEntity  {
 
+
     private LocalDate date;
-    private String descriotion;
+    private String description;
     private Pet pet;
 
     public LocalDate getDate() {
@@ -16,12 +21,12 @@ public class Visit extends BaseEntity  {
         this.date = date;
     }
 
-    public String getDescriotion() {
-        return descriotion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriotion(String descriotion) {
-        this.descriotion = descriotion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Pet getPet() {
