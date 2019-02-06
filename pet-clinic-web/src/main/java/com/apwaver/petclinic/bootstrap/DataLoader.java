@@ -1,10 +1,7 @@
 package com.apwaver.petclinic.bootstrap;
 
 import com.apwaver.petclinic.model.*;
-import com.apwaver.petclinic.services.OwnerService;
-import com.apwaver.petclinic.services.PetTypeService;
-import com.apwaver.petclinic.services.SpecialityService;
-import com.apwaver.petclinic.services.VetService;
+import com.apwaver.petclinic.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,14 +16,16 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialitiesService;
+    private final VisitService visitService;
 
     @Autowired
     public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-                      SpecialityService specialitiesService) {
+                      SpecialityService specialitiesService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialitiesService = specialitiesService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -86,6 +85,12 @@ public class DataLoader implements CommandLineRunner {
 
         ownerService.save(owner2);
 
+        Visit catVisit = new Visit();
+        catVisit.setDate(LocalDate.now());
+        catVisit.setPet(fionaPet);
+        catVisit.setDescription("Sneezy Cat");
+
+        visitService.save(catVisit);
 
         Owner owner3 = new Owner();
         owner3.setFirstName("Ted");
