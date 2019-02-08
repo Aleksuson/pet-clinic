@@ -3,8 +3,6 @@ package com.apwaver.petclinic.services.springDataJpa;
 import com.apwaver.petclinic.model.Owner;
 
 import com.apwaver.petclinic.repositories.OwnerRepository;
-import com.apwaver.petclinic.repositories.PetRepository;
-import com.apwaver.petclinic.repositories.PetTypeRepository;
 import com.apwaver.petclinic.services.OwnerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

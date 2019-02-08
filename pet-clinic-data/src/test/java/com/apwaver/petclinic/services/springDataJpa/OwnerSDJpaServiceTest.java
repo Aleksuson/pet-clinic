@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 class OwnerSDJpaServiceTest {
 
-    public static final String LAST_NAME = "Hobson";
+    private static final String LAST_NAME = "Hobson";
     @InjectMocks
     OwnerSDJpaService service;
 
