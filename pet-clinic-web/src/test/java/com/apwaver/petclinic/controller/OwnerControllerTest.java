@@ -2,6 +2,7 @@ package com.apwaver.petclinic.controller;
 
 import com.apwaver.petclinic.model.Owner;
 import com.apwaver.petclinic.services.OwnerService;
+import com.apwaver.petclinic.services.map.PetServiceMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,6 +39,10 @@ class OwnerControllerTest {
 
     private MockMvc mockMvc;
 
+    private static final Long TEST_OWNER_ID = 1L;
+
+    private Owner alex;
+
     @BeforeEach
     void setUp() {
         ownerSet = new HashSet<>();
@@ -45,6 +53,15 @@ class OwnerControllerTest {
         ownerSet.add(two);
 
         mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
+
+        alex = new Owner();
+        alex.setId(TEST_OWNER_ID);
+        alex.setFirstName("Alex");
+        alex.setLastName("Newborn");
+        alex.setAddress("32 Shire St.");
+        alex.setCity("York");
+        alex.setTelephone("73545345");
+
     }
 
     @Test
@@ -65,5 +82,21 @@ class OwnerControllerTest {
                 .andExpect(view().name("notimplemented"));
 
         verifyZeroInteractions(ownerService);
+    }
+
+
+    @Test
+    void showOwnerTest() throws Exception {
+
+        given(ownerService.findById(TEST_OWNER_ID)).willReturn(alex);
+
+        mockMvc.perform(get("/owners/{ownerID}",1L))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("owner", hasProperty("firstName",is("Alex"))))
+                .andExpect(model().attribute("owner", hasProperty("lastName",is("Newborn"))))
+                .andExpect(model().attribute("owner", hasProperty("address",is("32 Shire St."))))
+                .andExpect(model().attribute("owner", hasProperty("city",is("York"))))
+                .andExpect(model().attribute("owner", hasProperty("telephone",is("73545345"))))
+                .andExpect(view().name("owners/ownerDetails"));
     }
 }
