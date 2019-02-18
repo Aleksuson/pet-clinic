@@ -42,6 +42,7 @@ public class Pet extends BaseEntity{
     private Owner owner;
 
     @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     public String getName() {
